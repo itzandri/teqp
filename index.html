@@ -60,10 +60,17 @@
     outline: none;
     box-shadow: 0 0 6px rgba(63,142,252,0.4);
   }
+
+  /* Table Responsive */
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
   table {
     border-collapse: collapse;
     margin-top: 0.5rem;
     width: 100%;
+    min-width: 600px; /* supaya kolom nggak terlalu rapat di mobile */
   }
   th, td {
     padding: 0.6rem 0.8rem;
@@ -74,6 +81,7 @@
     background: var(--primary);
     color: white;
     font-size: 0.85rem;
+    white-space: nowrap;
   }
   td input, td select {
     width: 100%;
@@ -81,6 +89,7 @@
   tr:hover td {
     background: #f8fafc;
   }
+
   button {
     padding: 0.6rem 1rem;
     cursor: pointer;
@@ -169,7 +178,6 @@
       padding: 6px;
     }
   }
-
   @media (max-width: 480px) {
     .label-container {
       grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
@@ -217,24 +225,30 @@
       <select id="fontSize"></select>
     </div>
   </div>
-  <table id="dataTable">
-    <thead>
-      <tr>
-        <th>Tanggal Expired</th>
-        <th>Masa Kesegaran</th>
-        <th>Inisial</th>
-        <th>Jumlah</th>
-        <th>Aksi</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+
+  <div class="table-wrapper">
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>Tanggal Expired</th>
+          <th>Masa Kesegaran</th>
+          <th>Inisial</th>
+          <th>Jumlah</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
   <div class="actions">
     <button class="btn-primary" onclick="addRow()">Tambah Data</button>
     <button class="btn-primary" onclick="generateLabels()">Tampilkan Label</button>
     <button class="btn-primary" onclick="window.print()">Print</button>
   </div>
+
   <div id="labelArea" class="label-container"></div>
+
   <footer class="footer-credit">
     🚨 Jangan Lupa Sholat 🚨
   </footer>
