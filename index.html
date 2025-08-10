@@ -70,7 +70,7 @@
     border-collapse: collapse;
     margin-top: 0.5rem;
     width: 100%;
-    min-width: 600px; /* supaya kolom nggak terlalu rapat di mobile */
+    min-width: 600px;
   }
   th, td {
     padding: 0.6rem 0.8rem;
@@ -129,6 +129,9 @@
     text-align: center;
     page-break-inside: avoid;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .top-right {
     position: absolute;
@@ -139,7 +142,12 @@
     color: #f59e0b;
   }
   .center-label {
-    margin-top: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0; /* hapus margin agar benar2 center */
   }
   .bottom-right {
     position: absolute;
