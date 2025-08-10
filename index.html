@@ -1,215 +1,298 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Label Expired Generator</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 20px;
-      background: linear-gradient(to bottom right, #3498db, #f1c40f, #e74c3c);
-      color: #333;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Label Expired Generator</title>
+<style>
+  :root {
+    --primary: #3f8efc;
+    --primary-dark: #2f6bd9;
+    --danger: #ff4d4f;
+    --bg-light: #f0f4fa;
+    --text-dark: #1e293b;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg-light);
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    color: var(--text-dark);
+  }
+  .container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 1000px;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--primary-dark);
+    font-size: 1.4rem;
+  }
+  .form-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    justify-content: center;
+  }
+  label {
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  select, input[type="date"], input[type="number"], input[type="text"] {
+    padding: 0.5rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    min-width: 140px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+  select:focus, input:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 6px rgba(63,142,252,0.4);
+  }
+  table {
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+  th, td {
+    padding: 0.6rem 0.8rem;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  th {
+    background: var(--primary);
+    color: white;
+    font-size: 0.85rem;
+  }
+  td input, td select {
+    width: 100%;
+  }
+  tr:hover td {
+    background: #f8fafc;
+  }
+  button {
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: 0.2s;
+    font-size: 0.9rem;
+  }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: var(--primary-dark); }
+  .btn-danger { background: var(--danger); color: white; }
+  .btn-danger:hover { background: #d9363e; }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-top: 1rem;
+  }
 
-    .container {
-      max-width: 100%;
-      margin: auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.15);
-    }
+  /* Label grid responsive penuh */
+  .label-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 8px;
+    margin-top: 1.5rem;
+  }
+  .label {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 8px 12px;
+    background: white;
+    font-family: monospace;
+    position: relative;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    text-align: center;
+    page-break-inside: avoid;
+    width: 100%;
+  }
+  .top-right {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    font-weight: bold;
+    font-size: 0.75em;
+    color: #f59e0b;
+  }
+  .center-label {
+    margin-top: 12px;
+  }
+  .bottom-right {
+    position: absolute;
+    bottom: 4px;
+    right: 6px;
+    font-size: 0.85em;
+    color: var(--text-dark);
+  }
 
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-      font-family: 'Poppins', sans-serif;
-      font-size: 24px;
-    }
+  /* Footer peringatan */
+  .footer-credit {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ff0000;
+    background: #fff3f3;
+    border: 1px solid #ffcccc;
+    padding: 8px 12px;
+    border-radius: 8px;
+    animation: blink 1.5s infinite;
+  }
+  @keyframes blink {
+    0%, 100% { background-color: #fff3f3; color: #ff0000; }
+    50% { background-color: #ff0000; color: #ffffff; }
+  }
 
-    label {
-      display: block;
-      margin-top: 12px;
-      font-weight: bold;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 4px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    button {
-      background-color: #2980b9;
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      margin-top: 15px;
-      margin-right: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      background-color: #1c5980;
-    }
-
+  /* Mobile Friendly */
+  @media (max-width: 768px) {
     .label-container {
-      margin-top: 25px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 6px;
     }
-
     .label {
-      border: 1px dashed #555;
-      border-radius: 6px;
-      padding: 10px;
-      background: #f8f9fa;
-      position: relative;
-      font-family: monospace;
-      text-align: center;
+      font-size: 0.8rem;
+      padding: 6px;
     }
+  }
 
-    .top-right {
+  @media (max-width: 480px) {
+    .label-container {
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    }
+    .label {
+      font-size: 0.75rem;
+    }
+  }
+
+  /* Print tetap rapi */
+  @media print {
+    body * { visibility: hidden; }
+    #labelArea, #labelArea * { visibility: visible; }
+    #labelArea { 
       position: absolute;
-      top: 5px;
-      right: 8px;
-      font-weight: bold;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, 5.2cm);
+      gap: 0.3cm;
     }
-
-    .bottom-right {
-      position: absolute;
-      bottom: 5px;
-      right: 8px;
+    .label {
+      height: 3cm;
+      font-size: 12pt !important;
     }
-
-    .footer {
-      text-align: center;
-      font-size: 1em;
-      margin-top: 40px;
-      font-weight: bold;
-      color: #c0392b;
-      background: #fdecea;
-      padding: 10px;
-      border-radius: 5px;
-    }
-
-    @media (max-width: 768px) {
-      .label-container {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 480px) {
-      .label-container {
-        grid-template-columns: repeat(1, 1fr);
-      }
-    }
-
-    @media print {
-      body * {
-        visibility: hidden;
-      }
-      #labelArea, #labelArea * {
-        visibility: visible;
-      }
-      #labelArea {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-      }
-      .footer {
-        display: none !important;
-      }
-    }
-  </style>
+    .footer-credit { display: none; }
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Label Expired Generator</h1>
-
-    <label for="tanggalExpired">Tanggal Expired:</label>
-    <input type="date" id="tanggalExpired">
-
-    <label for="kesegaran">Masa Kesegaran:</label>
-    <select id="kesegaran">
-      <option value="1">H-1 Bulan</option>
-      <option value="2">H-2 Bulan</option>
-      <option value="3">H-3 Bulan</option>
-    </select>
-
-    <label for="inisial">Inisial Pembuat:</label>
-    <input type="text" id="inisial" placeholder="Contoh: VEN">
-
-    <label for="jumlah">Jumlah Label:</label>
-    <input type="number" id="jumlah" value="10" min="1">
-
-    <label for="ukuran">Ukuran Kertas:</label>
-    <select id="ukuran">
-      <option value="A4">A4</option>
-      <option value="Legal">Legal</option>
-      <option value="Thermal">Thermal</option>
-    </select>
-
-    <label for="fontSize">Ukuran Font (1 - 72):</label>
-    <select id="fontSize"></select>
-
-    <button onclick="generateLabel()">Tampilkan Label</button>
-    <button onclick="window.print()">Print</button>
-
-    <div id="labelArea" class="label-container"></div>
-
-    <div class="footer">🚨 Jangan Lupa Sholat 🚨</div>
+<div class="container">
+  <h1>Label Expired Generator</h1>
+  <div class="form-row">
+    <div>
+      <label for="ukuran">Ukuran Kertas:</label><br>
+      <select id="ukuran">
+        <option value="A4">A4</option>
+        <option value="Legal">Legal</option>
+        <option value="Thermal">Thermal</option>
+      </select>
+    </div>
+    <div>
+      <label for="fontSize">Ukuran Font:</label><br>
+      <select id="fontSize"></select>
+    </div>
   </div>
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Tanggal Expired</th>
+        <th>Masa Kesegaran</th>
+        <th>Inisial</th>
+        <th>Jumlah</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <div class="actions">
+    <button class="btn-primary" onclick="addRow()">Tambah Data</button>
+    <button class="btn-primary" onclick="generateLabels()">Tampilkan Label</button>
+    <button class="btn-primary" onclick="window.print()">Print</button>
+  </div>
+  <div id="labelArea" class="label-container"></div>
+  <footer class="footer-credit">
+    🚨 Jangan Lupa Sholat 🚨
+  </footer>
+</div>
+<script>
+  const fontDropdown = document.getElementById("fontSize");
+  for (let i = 6; i <= 72; i++) {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.text = i;
+    if (i === 12) opt.selected = true;
+    fontDropdown.appendChild(opt);
+  }
 
-  <script>
-    // Tambah font size opsi
-    const fontDropdown = document.getElementById("fontSize");
-    for (let i = 6; i <= 72; i++) {
-      const opt = document.createElement("option");
-      opt.value = i;
-      opt.text = i;
-      if (i === 12) opt.selected = true;
-      fontDropdown.appendChild(opt);
-    }
+  function addRow() {
+    const tbody = document.querySelector("#dataTable tbody");
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><input type="date" class="tglExpired"></td>
+      <td>
+        <select class="kesegaran">
+          <option value="1">H-1 Bulan</option>
+          <option value="2">H-2 Bulan</option>
+          <option value="3">H-3 Bulan</option>
+        </select>
+      </td>
+      <td><input type="text" class="inisial" placeholder="Contoh: VEN"></td>
+      <td><input type="number" class="jumlah" value="10" min="1"></td>
+      <td><button class="btn-danger" onclick="this.closest('tr').remove()">Hapus</button></td>
+    `;
+    tbody.appendChild(tr);
+  }
 
-    function formatDate(date) {
-      const d = date.getDate().toString().padStart(2, '0');
-      const m = (date.getMonth() + 1).toString().padStart(2, '0');
-      const y = date.getFullYear().toString().slice(-2);
-      return `${d}-${m}-${y}`;
-    }
+  function formatDate(date) {
+    const d = date.getDate().toString().padStart(2, '0');
+    const m = (date.getMonth() + 1).toString().padStart(2, '0');
+    const y = date.getFullYear().toString().slice(-2);
+    return `${d}-${m}-${y}`;
+  }
 
-    function generateLabel() {
-      const expiredInput = document.getElementById("tanggalExpired").value;
-      const inisial = document.getElementById("inisial").value.trim().toUpperCase();
-      const bulanMundur = parseInt(document.getElementById("kesegaran").value);
-      const jumlah = parseInt(document.getElementById("jumlah").value);
-      const ukuran = document.getElementById("ukuran").value;
-      const fontSize = parseInt(document.getElementById("fontSize").value);
+  function generateLabels() {
+    const fontSize = parseInt(document.getElementById("fontSize").value);
+    const labelArea = document.getElementById("labelArea");
+    labelArea.innerHTML = "";
 
-      if (!expiredInput || !inisial || isNaN(jumlah)) {
-        alert("Mohon isi semua field terlebih dahulu.");
-        return;
-      }
+    document.querySelectorAll("#dataTable tbody tr").forEach(row => {
+      const expiredInput = row.querySelector(".tglExpired").value;
+      const kesegaran = parseInt(row.querySelector(".kesegaran").value);
+      const inisial = row.querySelector(".inisial").value.trim().toUpperCase();
+      const jumlah = parseInt(row.querySelector(".jumlah").value);
 
-      const labelArea = document.getElementById("labelArea");
-      labelArea.innerHTML = "";
+      if (!expiredInput || !inisial || isNaN(jumlah)) return;
 
       const expiredDate = new Date(expiredInput);
       const returDate = new Date(expiredDate);
-      returDate.setMonth(returDate.getMonth() - bulanMundur);
+      returDate.setMonth(returDate.getMonth() - kesegaran);
 
-      const batasKesegaran = `(E-${bulanMundur}B)`;
+      const batasKesegaran = `(E-${kesegaran}B)`;
       const expiredStr = formatDate(expiredDate);
       const returStr = formatDate(returDate);
 
@@ -219,28 +302,17 @@
         div.style.fontSize = fontSize + "px";
         div.innerHTML = `
           <div class="top-right">${batasKesegaran}</div>
-          <div>
-            <u>${expiredStr}</u><br>
-            ${returStr}
+          <div class="center-label">
+            <u>${expiredStr}</u><br>${returStr}
           </div>
           <div class="bottom-right">${inisial}</div>
         `;
         labelArea.appendChild(div);
       }
+    });
+  }
 
-      // Ukuran kertas
-      switch (ukuran) {
-        case "A4":
-          document.body.style.width = "21cm";
-          break;
-        case "Legal":
-          document.body.style.width = "21.6cm";
-          break;
-        case "Thermal":
-          document.body.style.width = "8cm";
-          break;
-      }
-    }
-  </script>
+  addRow();
+</script>
 </body>
 </html>
